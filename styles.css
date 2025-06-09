@@ -1,5 +1,5 @@
 /* Import your existing styles and add Bootstrap 5 compatibility */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bapu&display=swap");
 
 :root {
   /* Jeff Koons: Moon Phases color palette */
@@ -153,11 +153,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: all 0.3s ease;
-}
-
-.navbar-brand:hover {
-  transform: scale(1.05);
 }
 
 .navbar-nav .nav-link {
@@ -183,16 +178,18 @@ body {
   transform: translateX(-50%);
 }
 
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
+.navbar-nav .nav-link:hover::after {
   width: 100%;
 }
 
+.navbar-toggler {
+  background: var(--gradient-primary);
+}
 /* Hero Section */
 .hero-section {
   background: var(--gradient-primary);
   color: white;
-  padding: 120px 0 80px;
+  padding: 120px 0 10px;
   position: relative;
   overflow: hidden;
   min-height: 100vh;
@@ -605,7 +602,7 @@ body {
 
 /* Telugu Text */
 .telugu-text {
-  font-family: "Noto Sans Telugu", "Inter", sans-serif;
+  font-family: "Bapu", "Noto Sans Telugu", "Inter", sans-serif;
   line-height: 1.8;
 }
 
