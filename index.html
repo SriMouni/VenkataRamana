@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharshi Ramana Stories - Telugu Blog Collection</title>
+    <meta name="description" content="A personal collection of Telugu stories, experiences, and memories by Maharshi Ramana">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#" onclick="storyManager.showHomePage()">
+                <i class="fas fa-book-heart me-2"></i>
+                <span>Maharshi Ramana Stories</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stories">Stories</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page View -->
+    <div id="homePage" class="page-view active">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section bg-gradient-primary text-white">
+            <div class="hero-background"></div>
+            <div class="container">
+                <div class="row align-items-center min-vh-100 py-5">
+                    <div class="col-12">
+                        <div class="text-center hero-content">
+                            <h1 class="display-2 fw-bold mb-4 animate-fade-in">
+                                <span class="d-block title-main">Maharshi Ramana</span>
+                                <span class="d-block title-sub fs-3 opacity-75">Story Collection</span>
+                            </h1>
+                            <p class="lead mb-4 animate-fade-in-delay-1">Life experiences, memories, and heartwarming stories in Telugu</p>
+                            <p class="fs-5 mb-5 opacity-75 animate-fade-in-delay-2">A personal collection of daily experiences, social encounters, and meaningful moments that shape our lives</p>
+                            
+                            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4 animate-fade-in-delay-3">
+                                <button class="btn btn-light btn-lg px-4 py-3" onclick="storyManager.showStoriesSection()">
+                                    <i class="fas fa-book-open me-2"></i>
+                                    <span>Read Stories</span>
+                                </button>
+                                <button class="btn btn-outline-light btn-lg px-4 py-3" onclick="storyManager.showStoriesSection()">
+                                    <i class="fas fa-list me-2"></i>
+                                    <span>Browse Collection</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 text-center border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-book-open fa-3x"></i>
+                                </div>
+                                <h3 class="card-title fw-bold text-primary" id="totalStories">0</h3>
+                                <p class="card-text text-muted">Total Stories</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 text-center border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-tags fa-3x"></i>
+                                </div>
+                                <h3 class="card-title fw-bold text-primary" id="totalCategories">0</h3>
+                                <p class="card-text text-muted">Categories</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 text-center border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-clock fa-3x"></i>
+                                </div>
+                                <h3 class="card-title fw-bold text-primary" id="latestStory">-</h3>
+                                <p class="card-text text-muted">Latest Story</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stories Section -->
+        <section id="stories" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center mb-5">
+                        <h2 class="display-4 fw-bold mb-4">My Stories</h2>
+                        <p class="lead text-muted">A collection of memories, experiences, and life stories</p>
+                    </div>
+                </div>
+
+                <!-- Search and Filters -->
+                <div class="row mb-5 no-print">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <!-- Search Box -->
+                                <div class="mb-4">
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="fas fa-search text-muted"></i>
+                                        </span>
+                                        <input type="text" class="form-control border-start-0" id="searchInput" 
+                                               placeholder="Search stories...">
+                                    </div>
+                                </div>
+                                
+                                <!-- Category Filters -->
+                                <div class="text-center">
+                                    <div class="btn-group flex-wrap" role="group" id="categoryFilters">
+                                        <!-- Categories will be dynamically inserted here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div class="loading-spinner hidden" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <span>Loading stories...</span>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message hidden" id="errorMessage">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Error loading stories. Please try again.</span>
+                </div>
+
+                <!-- Stories Grid -->
+                <div class="row g-4" id="storiesContainer">
+                    <!-- Stories will be dynamically inserted here -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-5 no-print">
+                    <button class="btn btn-primary btn-lg px-5" id="loadMoreBtn" style="display: none;">
+                        <i class="fas fa-book me-2"></i>
+                        <span>Load More Stories</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <!-- <section id="about" class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center mb-5">
+                        <h2 class="display-4 fw-bold mb-4">About This Collection</h2>
+                        <p class="lead text-muted">Stories are the threads that weave the fabric of our lives</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-heart fa-3x"></i>
+                                </div>
+                                <h4 class="card-title fw-bold mb-3">Personal Experiences</h4>
+                                <p class="card-text text-muted">
+                                    Authentic stories from daily life, capturing the essence of human experiences,
+                                    emotions, and the beauty found in ordinary moments.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-users fa-3x"></i>
+                                </div>
+                                <h4 class="card-title fw-bold mb-3">Social Encounters</h4>
+                                <p class="card-text text-muted">
+                                    Stories of human connections, friendships, and the meaningful relationships
+                                    that shape our understanding of community and belonging.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="text-primary mb-3">
+                                    <i class="fas fa-lightbulb fa-3x"></i>
+                                </div>
+                                <h4 class="card-title fw-bold mb-3">Life Lessons</h4>
+                                <p class="card-text text-muted">
+                                    Reflective narratives that explore wisdom gained through experience,
+                                    offering insights and perspectives on life's journey.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </div>
+
+    <!-- Story Page View -->
+    <div id="storyPage" class="page-view">
+        <div class="container py-5">
+            <!-- Breadcrumb -->
+            <nav class="no-print mb-4" style="margin-top: 80px;">
+                <ol class="breadcrumb bg-light p-3 rounded">
+                    <li class="breadcrumb-item">
+                        <a href="#" onclick="storyManager.showHomePage()" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Story</li>
+                </ol>
+            </nav>
+
+            <!-- Back Button -->
+            <div class="mb-4 no-print">
+                <button class="btn btn-outline-primary" onclick="storyManager.goBack()">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    <span>Back to Stories</span>
+                </button>
+            </div>
+
+            <!-- Story Content -->
+            <div id="storyContent" class="hidden">
+                <!-- Story content will be dynamically inserted here -->
+            </div>
+            
+            <!-- Back Button -->
+            <div class="mb-4 no-print">
+                <button class="btn btn-outline-primary" onclick="storyManager.goBack()">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    <span>Back to Stories</span>
+                </button>
+            </div>
+
+            <!-- Print Button -->
+            <button class="btn btn-primary position-fixed no-print" id="printButton" 
+                    style="bottom: 2rem; right: 2rem; border-radius: 50%; width: 60px; height: 60px;" 
+                    title="Print Story">
+                <i class="fas fa-print"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner for Story -->
+    <div id="storyLoadingSpinner" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <span>Loading story...</span>
+        </div>
+    </div>
+
+    <!-- Debug Panel -->
+    <div id="debugPanel" class="position-fixed top-0 end-0 h-100 bg-white shadow-lg d-none" 
+         style="width: 80%; max-width: 600px; z-index: 9999; overflow-y: auto;">
+        <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Debug Panel</h5>
+            <button id="closeDebug" class="btn btn-sm btn-outline-light">Close</button>
+        </div>
+        <div class="p-3">
+            <div class="mb-4">
+                <h6 class="fw-bold text-primary border-bottom pb-2">Raw HTML Sample</h6>
+                <pre id="debugHtml" class="bg-light p-3 rounded small" style="max-height: 300px; overflow-y: auto;"></pre>
+            </div>
+            <div class="mb-4">
+                <h6 class="fw-bold text-primary border-bottom pb-2">Parsed Stories</h6>
+                <pre id="debugStories" class="bg-light p-3 rounded small" style="max-height: 300px; overflow-y: auto;"></pre>
+            </div>
+            <div class="mb-4">
+                <h6 class="fw-bold text-primary border-bottom pb-2">Parsing Log</h6>
+                <pre id="debugLog" class="bg-light p-3 rounded small" style="max-height: 300px; overflow-y: auto;"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
