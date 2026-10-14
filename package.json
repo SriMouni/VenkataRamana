@@ -1,0 +1,12 @@
+{
+  "name": "maharshi-ramana-stories",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Website for Maharshi Ramana's Telugu stories (static site + Supabase)",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "seed": "node scripts/make-seed-sql.mjs",
+    "setup": "node scripts/setup-supabase.mjs"
+  }
+}
