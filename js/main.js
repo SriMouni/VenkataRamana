@@ -101,7 +101,7 @@ function storyCard(s, q = "") {
       <span class="card-topic"><span class="t-dot">${t.emoji}</span>${t.label}</span>
       <h3>${hl(s.title)}</h3>
       <p>${hl(excerpt)}…</p>
-      <div class="card-foot"><span>${icon.clock} ${s.mins} min read</span><span class="go">Read ${icon.arrow}</span></div>
+      <div class="card-foot"><span>${icon.calendar} ${s.date}</span><span>${icon.clock} ${s.mins} min</span><span class="go">Read ${icon.arrow}</span></div>
     </a>`;
 }
 
@@ -235,7 +235,7 @@ async function homePage() {
               <button data-topic="all">All<span class="n">${stories.length}</span></button>
               ${TOPICS.filter((t) => counts[t.key]).map((t) => `<button data-topic="${t.key}">${t.emoji} ${t.label}<span class="n">${counts[t.key]}</span></button>`).join("")}
             </div>
-            <div class="tabs" id="sortTabs"><button data-sort="new">Newest</button><button data-sort="old">From the first</button></div>
+            <div class="tabs" id="sortTabs"><button data-sort="new">Newest first</button><button data-sort="old">Oldest first</button></div>
           </div>
         </div>
         <div class="grid reveal-stagger" id="storyGrid"></div>
@@ -359,6 +359,7 @@ async function storyPage(id) {
           <h1>${esc(s.title)}</h1>
           <div class="story-meta">
             <span class="meta-chip">${icon.book} Story ${pad(s.id)} of ${stories.length}</span>
+            <span class="meta-chip">${icon.calendar} ${s.date}</span>
             <span class="meta-chip">${icon.clock} ${s.mins} min read</span>
             <span class="meta-chip">✍️ మహర్షి రమణ</span>
           </div>

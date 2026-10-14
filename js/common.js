@@ -10,6 +10,7 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const plainText = (html) => new DOMParser().parseFromString(html || "", "text/html").body.textContent.replace(/\s+/g, " ").trim();
 const pad = (n) => String(n).padStart(2, "0");
+const fmtDate = (d) => new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
 // Stored HTML only comes from the admin, but strip anything executable anyway.
 function safeHtml(html) {
@@ -60,14 +61,15 @@ function processStory(s) {
     .filter((x) => x.n > 0).sort((a, b) => b.n - a.n);
   const tags = scores.filter((x) => x.n >= 3).map((x) => x.t.key);
   const top = scores[0]?.t.key || "life";
-  return { ...s, text, topic: top, tags: tags.length ? tags : [top], mins: Math.max(1, Math.round(text.split(/\s+/).length / 130)) };
+  return { ...s, text, topic: top, tags: tags.length ? tags : [top], mins: Math.max(1, Math.round(text.split(/\s+/).length / 130)), date: fmtDate(s.created_at) };
 }
 
 /* ---------- data ---------- */
 const cache = {};
 async function getStories(force) {
   if (cache.stories && !force) return cache.stories;
-  const { data, error } = await sb.from("stories").select("*").order("id", { ascending: true });
+  // Oldest first by published date; id breaks ties (the imported stories share one date).
+  const { data, error } = await sb.from("stories").select("*").order("created_at", { ascending: true }).order("id", { ascending: true });
   if (error) throw error;
   return (cache.stories = data.map(processStory));
 }
@@ -94,6 +96,7 @@ const icon = {
   link: I('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>'),
   copy: I('<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'),
   share: I('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>'),
+  calendar: I('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'),
   edit: I('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
   trash: I('<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>'),
   plus: I('<path d="M12 5v14M5 12h14"/>'),

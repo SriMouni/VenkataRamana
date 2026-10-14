@@ -677,3 +677,4 @@ html, body { overflow-x: clip; }
   .tape.t1 { left: -8px; } .tape.t2 { right: -8px; }
   .sticky-note { top: -10px; }
 }
+.card-foot { gap: 10px; }

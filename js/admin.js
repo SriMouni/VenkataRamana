@@ -29,6 +29,17 @@ function pickFiles(multiple) {
   });
 }
 
+/* ---------- dates ---------- */
+// "YYYY-MM-DD" in local time for <input type="date">; today when no date is given.
+function dayValue(d) {
+  const x = d ? new Date(d) : new Date();
+  return `${x.getFullYear()}-${pad(x.getMonth() + 1)}-${pad(x.getDate())}`;
+}
+// A picked day becomes that day; today keeps the current time so it sorts after earlier stories today.
+function dayToIso(day) {
+  return day === dayValue() ? new Date().toISOString() : new Date(`${day}T12:00:00`).toISOString();
+}
+
 /* ---------- auth ---------- */
 async function refreshAuth() {
   const { data } = await sb.auth.getSession();
@@ -85,6 +96,7 @@ async function storiesView() {
       <div class="row-item">
         <span class="num">${pad(s.id)}</span>
         <span class="ttl">${esc(s.title)}</span>
+        <span class="row-date">${s.date}</span>
         <span class="row-actions">
           <a class="icon-action" href="index.html#/story/${s.id}" target="_blank" rel="noopener" title="View">${icon.arrow}</a>
           <a class="icon-action" href="#/edit/${s.id}" title="Edit">${icon.edit}</a>
@@ -114,7 +126,10 @@ async function editorView(id) {
     story = data;
   }
   shell("stories", id ? `Edit story <em>${pad(id)}</em>` : "Write a <em>new story</em>", `<a class="btn btn-ghost" href="#/stories">${icon.back} Back</a>`, `
-    <input id="title" class="editor-title" value="${esc(story.title)}" placeholder="Story title (in Telugu)" />
+    <div class="editor-top">
+      <input id="title" class="editor-title" value="${esc(story.title)}" placeholder="Story title (in Telugu)" />
+      <label class="date-field">${icon.calendar}<span>Published</span><input type="date" id="pubDate" value="${dayValue(story.created_at)}" max="${dayValue()}" /></label>
+    </div>
     <div class="editor-shell"><div id="editor"></div></div>
     <p class="error" id="saveError"></p>
     <div class="form-actions">
@@ -157,13 +172,18 @@ async function editorView(id) {
 
   $("#save").onclick = async (e) => {
     const title = $("#title").value.trim();
+    const day = $("#pubDate").value;
     // root.innerHTML rather than getSemanticHTML(): Quill 2.0.3's version turns every space into &nbsp;.
     const body = quill.root.innerHTML;
     if (!title || !quill.getText().trim()) return ($("#saveError").textContent = "Please add a title and the story.");
+    if (!day) return ($("#saveError").textContent = "Please pick the published date.");
+    const row = { title, body };
+    // Only touch created_at when the date was changed, so stories on the same day keep their order.
+    if (!id || day !== dayValue(story.created_at)) row.created_at = dayToIso(day);
     e.target.disabled = true;
     const res = id
-      ? await sb.from("stories").update({ title, body, updated_at: new Date().toISOString() }).eq("id", id).select("id").single()
-      : await sb.from("stories").insert({ title, body }).select("id").single();
+      ? await sb.from("stories").update({ ...row, updated_at: new Date().toISOString() }).eq("id", id).select("id").single()
+      : await sb.from("stories").insert(row).select("id").single();
     e.target.disabled = false;
     if (res.error) return ($("#saveError").textContent = res.error.message);
     toast(id ? "Story saved" : "Story published 🎉");
