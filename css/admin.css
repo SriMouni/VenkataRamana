@@ -38,10 +38,10 @@ body.admin { background: var(--bg-alt); min-height: 100vh; }
 .editor-title:focus { border-color: var(--primary); }
 .editor-shell { margin-top: 16px; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
 #editor { min-height: 460px; font-family: var(--telugu); font-size: 1.12rem; color: var(--text); }
-.ql-toolbar.ql-snow { border: 0 !important; border-bottom: 1px solid var(--border) !important; background: var(--surface-2); position: sticky; top: 92px; z-index: 5; padding: 10px; }
+.ql-toolbar.ql-snow { border: 0 !important; border-bottom: 1px solid var(--border) !important; background: var(--surface-2); padding: 12px 16px; font-family: var(--sans); }
 .ql-container.ql-snow { border: 0 !important; }
 .ql-editor { line-height: 2; padding: 26px 28px; }
-.ql-editor.ql-blank::before { color: var(--muted); font-style: normal; }
+.ql-editor.ql-blank::before { color: var(--muted); font-style: normal; left: 28px; right: 28px; }
 .ql-snow .ql-stroke { stroke: var(--text); } .ql-snow .ql-fill { fill: var(--text); } .ql-snow .ql-picker { color: var(--text); }
 .ql-snow .ql-picker-options { background: var(--surface); }
 .form-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }
@@ -70,8 +70,8 @@ body.admin { background: var(--bg-alt); min-height: 100vh; }
   .about-pic { max-width: 240px; }
   .panel { padding: 20px; }
   .login { padding: 28px 22px; }
-  .ql-toolbar.ql-snow { top: 80px; }
   .ql-editor { padding: 20px 16px; }
+  .ql-editor.ql-blank::before { left: 16px; right: 16px; }
 }
 
 [hidden] { display: none !important; }
